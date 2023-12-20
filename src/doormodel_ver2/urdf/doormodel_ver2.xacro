@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" 
+
+    xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+
+    xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+
+    xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+
+    name="doormodel_ver2">
+
+    <link name="base_footprint">
+        <visual>
+            <geometry>
+                <sphere radius="0.001" />
+            </geometry>
+        </visual>
+    </link>
+    <gazebo reference="base_footprint">
+        <turnGravityOff>false</turnGravityOff>
+    </gazebo>
+
+    <link name="door_frame">
+    <inertial>
+      <origin
+        xyz="0.0181275357504339 0.473579294998003 1.18961814011185"
+        rpy="0 0 0" />
+      <mass
+        value="4.09544050541022" />
+      <inertia
+        ixx="2.25977168579544"
+        ixy="1.15004789168221E-05"
+        ixz="-3.95009044327895E-06"
+        iyy="1.67598445023603"
+        iyz="-0.000466794841780445"
+        izz="0.584644123949266" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://doormodel_ver2/meshes/door_frame.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://doormodel_ver2/meshes/door_frame.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="door_frame">
+        <material>Gazebo/Black</material>
+  </gazebo>
+
+  <link name="door">
+    <inertial>
+      <origin
+        xyz="-0.027709004461708 0.372008996822502 -1.00485954008801"
+        rpy="0 0 0" />
+      <mass
+        value="16.5647498049362" />
+      <inertia
+        ixx="6.5422425631395"
+        ixy="0.000698494406723863"
+        ixz="-2.42598754619649E-06"
+        iyy="5.71792416783272"
+        iyz="0.000325065307803109"
+        izz="0.827109048036333" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://doormodel_ver2/meshes/door.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://doormodel_ver2/meshes/door.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="door_frame">
+        <material>Gazebo/White</material>
+  </gazebo>
+
+<link
+    name="handle">
+    <inertial>
+      <origin
+        xyz="0.049002 0.00023139 0.03997"
+        rpy="0 0 0" />
+      <mass
+        value="0.090777" />
+      <inertia
+        ixx="1.9038E-05"
+        ixy="-8.1288E-07"
+        ixz="-2.2377E-05"
+        iyy="0.00019118"
+        iyz="-1.0566E-07"
+        izz="0.00018422" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://doormodel_ver2/meshes/handle.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.77647 0.75686 0.73725 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://doormodel_ver2/meshes/handle.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="handle">
+        <material>Gazebo/Black</material>
+  </gazebo>
+
+  <joint name = "base2frame" type = "fixed">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <child link="door_frame/">
+    </joint>
+
+  <joint
+    name="hinge"
+    type="revolute">
+    <origin
+      xyz="0.046499 0.83 0"
+      rpy="3.1416 0 0" />
+    <parent
+      link="door_frame" />
+    <child
+      link="door" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="-1.571"
+      effort="0"
+      velocity="0" />
+  </joint>
+  
+  
+  <joint
+    name="handle_axis"
+    type="revolute">
+    <origin
+      xyz="-0.010603 0.69799 -1"
+      rpy="-1.5708 0 -1.5699" />
+    <parent
+      link="door" />
+    <child
+      link="handle" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="1.571"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>
+
+
